@@ -11,6 +11,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StudentResource extends Resource
@@ -97,8 +99,20 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\Filter::make('standard 1')->query(fn(Builder $query): Builder => $query->where('standard_id',1) ),
+               
+                // Tables\Filters\SelectFilter::make('standard_id')
+                //     ->options([
+                //         1 => 'standard 1',
+                //         2 => 'standard 2',
+                //         3 => 'standard 3',
+                //     ])->label('Select The Class'),
+                
+                Tables\Filters\SelectFilter::make('standard_id')
+                    ->relationship('standard','name')
+                    ->preload()
+                    ->label('Select The Class'),
+            ])  
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -124,6 +138,16 @@ class StudentResource extends Resource
             'create' => Pages\CreateStudent::route('/create'),
             'view' => Pages\ViewStudent::route('/{record}'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'First Name' => $record->first_name,
+            'Middle Name' => $record->middle_name,
+            'First Name' => $record->lastt_name,
+            'Class' => $record->standard->name,
         ];
     }
 }
