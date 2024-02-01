@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('student_id');
             $table->string('address_1');
             $table->string('address_2');
+            $table->foreignId('standard_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

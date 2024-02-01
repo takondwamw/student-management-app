@@ -20,6 +20,7 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $navigationGroup = 'Students Management';
+    protected static ?string $recordTitleAttribute = 'first_name';
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -28,24 +29,39 @@ class StudentResource extends Resource
             ->schema([
                Forms\Components\Card::make('Enroll New Student')
                     ->schema([
-                        Forms\Components\TextInput::make('first_name')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('middle_name')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('last_name')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('student_id')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('address_1')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('address_2')
-                        ->required()
-                        ->maxLength(255),
+                    Forms\Components\TextInput::make('first_name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('middle_name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('last_name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('student_id')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('address_1')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('address_2')
+                            ->required()
+                            ->maxLength(255),
+                            Forms\Components\Card::make('Is Enrolled in ')
+                            ->schema([
+                                Forms\Components\Select::make('standard_id')
+                                    ->relationship('standard','name')
+                                    ->preload()
+                                    ->createOptionForm([
+                                        Forms\Components\TextInput::make('name')
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\TextInput::make('class_number')
+                                        ->required()
+                                        ->numeric(),
+                                    ])
+                            ])
+                        
                     ])
                     ->description('add a new student')
                     ->icon('heroicon-o-users')
@@ -62,6 +78,8 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('middle_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->searchable(),
+                    Tables\Columns\TextColumn::make('standard.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('student_id')
                     ->searchable(),
@@ -95,7 +113,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\StandardRelationManager::class,
         ];
     }
 
