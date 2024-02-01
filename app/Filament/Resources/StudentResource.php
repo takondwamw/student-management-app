@@ -114,8 +114,15 @@ class StudentResource extends Resource
                     ->label('Select The Class'),
             ])  
             ->actions([
+                Tables\Actions\Action::make('Promote')
+                    ->action(function(Student $record){
+                        $record->stardard_id = $record->standard_id + 1 ;
+                        $record->save();
+                    }),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
