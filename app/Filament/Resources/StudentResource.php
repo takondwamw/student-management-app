@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+
+
 
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -116,9 +119,10 @@ class StudentResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('Promote')
                     ->action(function(Student $record){
-                        $record->stardard_id = $record->standard_id + 1 ;
+                        // dump($record);
+                        $record->standard_id = $record->standard_id + 1 ;
                         $record->save();
-                    }),
+                    }),        
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -127,6 +131,14 @@ class StudentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Promote All')
+                        ->action(function(Collection $records){
+                            $records->each(function($record){
+                                $record->standard_id = $record->standard_id + 1;
+                                $record->save();
+                            });
+                    }),
+
                 ]),
             ]);
     }
