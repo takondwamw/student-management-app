@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\StudentResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Resources\StudentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateUser extends CreateRecord
+class CreateStudent extends CreateRecord
 {
-    protected static string $resource = UserResource::class;
+    protected static string $resource = StudentResource::class;
 
     public function getCreatedNotificationTitle(): string
     {
-        return "User Created Successfully";
+        return "Student Enrolled Successfully";
     }
 
     protected function getRedirectUrl(): string
