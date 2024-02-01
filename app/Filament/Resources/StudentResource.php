@@ -128,6 +128,7 @@ class StudentResource extends Resource
     {
         return [
             RelationManagers\StandardRelationManager::class,
+            RelationManagers\GuardiansRelationManager::class,
         ];
     }
 

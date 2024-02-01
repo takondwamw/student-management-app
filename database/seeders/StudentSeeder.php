@@ -12,6 +12,9 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
+        \App\Models\Student::factory(20)
+            ->has(\App\Models\Guardian::factory()->count(3))
+            ->create();
     }
 }

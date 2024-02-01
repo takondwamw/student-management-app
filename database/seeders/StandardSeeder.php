@@ -12,6 +12,6 @@ class StandardSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Standard::Factory(10)->create();
     }
 }
