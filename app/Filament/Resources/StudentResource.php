@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use App\Events\PromoteStudent;
 
 
 
@@ -126,10 +127,10 @@ class StudentResource extends Resource
                     Tables\Actions\Action::make('Promote')
                     ->action(function(Student $record){
                         // dump($record);
-                        $record->standard_id = $record->standard_id + 1 ;
-                        $record->save();
+                        // dispatch an event ;
+                        event(new PromoteStudent($record));
                     })->color('success'),     
-                    Tables\Actions\Action::make('Demotemote')
+                    Tables\Actions\Action::make('Demote')
                     ->action(function(Student $record){
                         // dump($record);
                         $record->standard_id = $record->standard_id - 1 ;
@@ -137,6 +138,7 @@ class StudentResource extends Resource
                     })
                     ->color('danger')
                     ->requiresConfirmation(),
+                    // ->deselectRecordsAfterAction(),
                 ])
 
             ])
@@ -146,8 +148,10 @@ class StudentResource extends Resource
                     Tables\Actions\BulkAction::make('Promote All')
                         ->action(function(Collection $records){
                             $records->each(function($record){
-                                $record->standard_id = $record->standard_id + 1;
-                                $record->save();
+                                // $record->standard_id = $record->standard_id + 1;
+                                // $record->save();
+                                 // dispatch an event ;
+                                event(new PromoteStudent($record));
                             });
                     }),
 
