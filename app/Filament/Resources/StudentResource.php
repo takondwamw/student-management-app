@@ -122,7 +122,7 @@ class StudentResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\GroupAction::make([
+                Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('Promote')
                     ->action(function(Student $record){
                         // dump($record);
@@ -134,7 +134,9 @@ class StudentResource extends Resource
                         // dump($record);
                         $record->standard_id = $record->standard_id - 1 ;
                         $record->save();
-                    })->color('danger')->requiresComfirmation(),
+                    })
+                    ->color('danger')
+                    ->requiresConfirmation(),
                 ])
 
             ])
