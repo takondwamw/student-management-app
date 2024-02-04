@@ -117,15 +117,25 @@ class StudentResource extends Resource
                     ->label('Select The Class'),
             ])  
             ->actions([
-                Tables\Actions\Action::make('Promote')
+                 
+
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\GroupAction::make([
+                    Tables\Actions\Action::make('Promote')
                     ->action(function(Student $record){
                         // dump($record);
                         $record->standard_id = $record->standard_id + 1 ;
                         $record->save();
-                    }),        
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                    })->color('success'),     
+                    Tables\Actions\Action::make('Demotemote')
+                    ->action(function(Student $record){
+                        // dump($record);
+                        $record->standard_id = $record->standard_id - 1 ;
+                        $record->save();
+                    })->color('danger')->requiresComfirmation(),
+                ])
 
             ])
             ->bulkActions([
