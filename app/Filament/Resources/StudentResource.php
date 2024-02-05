@@ -33,46 +33,53 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-               Forms\Components\Card::make('Enroll New Student')
+            Forms\Components\Wizard::make([
+                Forms\Components\Wizard\Step::make('Personal Information')
                     ->schema([
-                    Forms\Components\TextInput::make('first_name')
-                            ->required()
-                            ->maxLength(255),
+                        Forms\Components\TextInput::make('first_name')
+                        ->required()
+                        ->maxLength(255),
                         Forms\Components\TextInput::make('middle_name')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('last_name')
                             ->required()
-                            ->maxLength(255),
+                        ->maxLength(255),
+                    ]),
+
+                Forms\Components\Wizard\Step::make('School Information')
+                ->schema([
+
                         Forms\Components\TextInput::make('student_id')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\Select::make('standard_id')
+                                ->relationship('standard','name')
+                                ->preload()
+                                ->createOptionForm([
+                                    Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                            Forms\Components\TextInput::make('class_number')
+                                ->required()
+                                ->numeric(),                
+                                ]),
+                        ]),
+
+                Forms\Components\Wizard\Step::make('demoGraphics Data')
+                    ->schema([
                         Forms\Components\TextInput::make('address_1')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('address_2')
                             ->required()
                             ->maxLength(255),
-                            Forms\Components\Card::make('Is Enrolled in ')
-                            ->schema([
-                                Forms\Components\Select::make('standard_id')
-                                    ->relationship('standard','name')
-                                    ->preload()
-                                    ->createOptionForm([
-                                        Forms\Components\TextInput::make('name')
-                                        ->required()
-                                        ->maxLength(255),
-                                    Forms\Components\TextInput::make('class_number')
-                                        ->required()
-                                        ->numeric(),
-                                    ])
-                            ])
-                        
-                    ])
-                    ->description('add a new student')
-                    ->icon('heroicon-o-users')
-                    ->columns(3),
+                    ]),
+
+                ]),
+
             ]);
+              
     }
 
     public static function table(Table $table): Table
