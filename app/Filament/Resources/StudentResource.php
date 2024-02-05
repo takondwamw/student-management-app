@@ -64,7 +64,7 @@ class StudentResource extends Resource
                                 ->required()
                                 ->numeric(),                
                                 ]),
-                        ]),
+                        ])->columns(2),
 
                 Forms\Components\Wizard\Step::make('demoGraphics Data')
                     ->schema([
@@ -76,7 +76,7 @@ class StudentResource extends Resource
                             ->maxLength(255),
                     ]),
 
-                ]),
+                ])->columns(3)->columnSpanFull(),
 
             ]);
               
