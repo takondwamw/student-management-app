@@ -18,7 +18,7 @@ class StandardResource extends Resource
     protected static ?string $model = Standard::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
-     protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'name';
     protected static ?string $navigationGroup = 'Students Management';
 
     protected static ?int $navigationSort = 2;

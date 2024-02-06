@@ -5,7 +5,7 @@ namespace App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\DAtabase\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListStudents extends ListRecords
 {

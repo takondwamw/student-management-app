@@ -125,8 +125,7 @@ class StudentResource extends Resource
                     ->label('Select The Class'),
             ])  
             ->actions([
-                 
-
+                
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

@@ -21,3 +21,4 @@ class Guardian extends Model
         $this->belongsToMany(Student::class);
     }
 }
+ 

@@ -21,8 +21,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
         ]);
 
-        // $this->call([
-        //     UserSeeder::class,
-        // ]);
+        \App\Models\Student::factory(20)
+            ->has(App\Models\Guardian::factory()->count(3))
+            ->create();
+         
+        $this->call([
+            UserSeeder::class,
+        ]);
     }
 }

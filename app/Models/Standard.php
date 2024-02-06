@@ -20,6 +20,6 @@ class Standard extends Model
     {
         return $this->hasMany(Student::class);
     }
-
+ 
 
 }
